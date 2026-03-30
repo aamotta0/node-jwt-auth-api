@@ -107,3 +107,8 @@ req.user queda con los datos del usuario
     ↓
 getProfile() → responde con el perfil
  */
+
+// NOTAS:
+// - El middleware `protect` verifica la validez del token JWT y adjunta la información del usuario a `req.user`.
+// - El middleware `authorize` se puede usar para restringir el acceso a ciertas rutas según el rol del usuario (por ejemplo, solo admin).
+// - En caso de token inválido o expirado, se devuelve un error 401 con un mensaje específico.
