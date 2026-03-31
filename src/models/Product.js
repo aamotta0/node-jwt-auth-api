@@ -3,15 +3,6 @@ const mongoose = require("mongoose");
 // Definimos el esquema (la estructura)
 const productSchema = new mongoose.Schema(
   {
-    category: {
-      type: String,
-      required: [true, "La categoría es obligatoria"],
-      enum: {
-        values: ["ropa", "tecnologia", "hogar", "libros"],
-        message: "{VALUE} no es una categoría válida",
-      },
-      trim: true,
-    },
     name: {
       type: String,
       required: [true, "El nombre del producto es obligatorio"],
