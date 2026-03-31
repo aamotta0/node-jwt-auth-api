@@ -160,8 +160,51 @@ const getProfile = async (req, res) => {
   }
 };
 
+// TEMPORAL: Solo para desarrollo - crear admin
+const createAdmin = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: "El email ya está registrado",
+      });
+    }
+
+    const user = await User.create({
+      name,
+      email,
+      password,
+      role: "admin", // Forzamos rol admin
+    });
+
+    const token = generateToken(user._id, user.email, user.role);
+
+    res.status(201).json({
+      success: true,
+      message: "Admin creado exitosamente",
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error al crear admin",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   register,
   login,
   getProfile,
+  createAdmin, // Exportamos la función temporal
 };

@@ -3,6 +3,7 @@ const {
   register,
   login,
   getProfile,
+  createAdmin,
 } = require("../controllers/authController");
 const { protect } = require("../middlewares/authMiddleware");
 
@@ -14,5 +15,8 @@ router.post("/login", login);
 
 // Rutas protegidas (requieren token)
 router.get("/profile", protect, getProfile);
+
+// Ruta temporal para crear admin (solo desarrollo)
+router.post("/create-admin", createAdmin);
 
 module.exports = router;

@@ -6,14 +6,18 @@ const {
   updateProduct,
   deleteProduct,
 } = require("../controllers/productController");
+const { protect, authorize } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
-// Definimos las rutas y qué controlador responde
-router.get("/", getProducts); // GET /api/products
-router.get("/:id", getProductById); // GET /api/products/:id
-router.post("/", createProduct); // POST /api/products
-router.put("/:id", updateProduct); // PUT /api/products/:id
-router.delete("/:id", deleteProduct); // DELETE /api/products/:id
+// Rutas públicas (cualquiera puede ver productos)
+router.get("/", getProducts);
+router.get("/:id", getProductById);
+
+// Rutas protegidas (solo usuarios autenticados pueden modificar)
+// authorize('admin') asegura que solo administradores puedan hacer estas acciones
+router.post("/", protect, authorize("admin"), createProduct);
+router.put("/:id", protect, authorize("admin"), updateProduct);
+router.delete("/:id", protect, authorize("admin"), deleteProduct);
 
 module.exports = router;

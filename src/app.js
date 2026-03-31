@@ -5,6 +5,7 @@ require("dotenv").config();
 // Importar rutas
 const productRoutes = require("./routes/productRoutes");
 const authRoutes = require("./routes/authRoutes");
+const cartRoutes = require("./routes/cartRoutes");
 
 const app = express();
 
@@ -24,6 +25,5 @@ app.get("/api/health", (req, res) => {
 // Montamos las rutas
 app.use("/api/products", productRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/cart", cartRoutes);
 module.exports = app;
-
-// Petición HTTP → app.js (middlewares) → productRoutes.js → productController.js → Product.js (modelo) → MongoDB
